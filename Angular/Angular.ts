@@ -6,12 +6,12 @@ import {FormGroup, FormControl} from '@angular/forms';
 @Component({
     selector: 'app-area',
     template: `
-        <div style="display: flex; flex-direction: column; width: 200px">
-            <input type="text" [(ngModel)]="form.value.firstname">
-            <input type="number" [(ngModel)]="form.value.age">
-            <input type="text" [(ngModel)]="form.value.lastname">
-            <input type="text" [(ngModel)]="form.value.twitter">
-        </div>
+        <form style="display: flex; flex-direction: column; width: 200px">
+            <input type="text" [(ngModel)]="form.value.firstname" name="firstname">
+            <input type="number" [(ngModel)]="form.value.age" name="age">
+            <input type="text" [(ngModel)]="form.value.lastname" name="lastname">
+            <input type="text" [(ngModel)]="form.value.twitter" name="twitter">
+        </form>
         <pre>{{ form.value | json }}</pre>`,
     styles: []
 })
