@@ -45,6 +45,9 @@ function PhoneBookForm({addEntryToPhoneBook}) {
     <form onSubmit={e => {
       e.preventDefault();
       addEntryToPhoneBook(userFirstname, userLastname, userPhone);
+      setUserFirstname('')
+      setUserLastname('')
+      setUserPhone('')
     }} style={style.form.container}>
       <label>First name:</label>
       <br/>
@@ -91,10 +94,6 @@ function PhoneBookForm({addEntryToPhoneBook}) {
 
 function InformationTable(props) {
 
-  useEffect(() => {
-    return props
-  })
-
   return (
     <table style={style.table} className='informationTable'>
       <thead>
@@ -106,8 +105,16 @@ function InformationTable(props) {
       </thead>
       <tbody>
       {
-        props.contactList.map(el =>
-          <tr>
+        props.contactList.sort((a, b) => {
+          if (a.userLastname < b.userLastname) {
+            return -1
+          } else if (a.userLastname > b.userLastname) {
+            return 1
+          } else {
+            return 0
+          }
+        }).map(el =>
+          <tr key={el.userFirstname + el.userLastname + el.userPhone}>
             <td>{el.userFirstname}</td>
             <td>{el.userLastname}</td>
             <td>{el.userPhone}</td>
@@ -122,10 +129,15 @@ function Application(props) {
   const [contactList, setContactList] = useState([])
 
   const addEntryToPhoneBook = (userFirstname, userLastname, userPhone) => {
-    console.log(userFirstname, userLastname, userPhone)
-    let newContact = contactList
-    newContact.push({userFirstname: userFirstname, userLastname: userLastname, userPhone: userPhone})
-    setContactList(newContact)
+    if (!contactList.find(e => {
+      return e.userFirstname === userFirstname && e.userLastname === userLastname && e.userPhone === userPhone
+    })) {
+      setContactList(contactList.concat({
+        userFirstname: userFirstname,
+        userLastname: userLastname,
+        userPhone: userPhone
+      }))
+    }
   }
 
   return (
