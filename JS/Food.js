@@ -13,18 +13,8 @@ function FoodDistribution(arr) {
 
   media = Math.floor(media)
 
-  // console.log('media', media)
-
   while (nSandwiches > 0) {
     let maxHunger = getMaxHunger(arr)
-    // console.log(hungerV.minHunger, hungerV.maxHunger)
-
-    if (maxHunger - media - nSandwiches >= 0) {
-      arr[arr.indexOf(maxHunger)] = media
-      nSandwiches -= maxHunger - media
-      // console.log(arr)
-      // console.log(nSandwiches)
-    } else if (maxHunger - media - nSandwiches < 0) {
       let count = 0
       for (let i = 0; i < arr.length; i++) {
         if (arr[i] === maxHunger) {
@@ -34,19 +24,15 @@ function FoodDistribution(arr) {
       if (count > nSandwiches) {
         break;
       }
-      // console.log('count:', count)
       if (count <= nSandwiches && count > 0 && nSandwiches > 0) {
         while (count > 0) {
-          arr[arr.indexOf(maxHunger)]--
-          nSandwiches--
+          arr[arr.indexOf(maxHunger)] = media
+          nSandwiches -= maxHunger - media
           count--
-          // console.log(count)
         }
-      }
     }
   }
 
-  // console.log('Fin:', arr, 'Sandwiches:', nSandwiches)
   console.log('Output:', getDifference(arr))
   // code goes here
   return arr;
@@ -54,14 +40,10 @@ function FoodDistribution(arr) {
 
 function getMaxHunger(arr) {
   let maxHunger = 0;
-  let minHunger = 5;
 
   arr.forEach((element) => {
     if (element > maxHunger) {
       maxHunger = element
-    }
-    if (element < minHunger) {
-      minHunger = element
     }
   })
   return maxHunger
